@@ -9,9 +9,9 @@ def createTable() -> None:
 
     # create a table
     c.execute("""CREATE TABLE customers (
-            first_name DATATYPE,
-            last_name DATATYPE,
-            email DATATYPE
+            first_name TEXT,
+            last_name TEXT,
+            email TEXT
         )""")
     # DATATYPES in SQLite
     # NULL
@@ -34,7 +34,29 @@ def insertDatainDB() -> None:
     c = conn.cursor()
 
     # create a table
-    c.execute("INSERT INTO customers VALUES" ('John','Elder','Johny@codemy.com'))
+    c.execute("INSERT INTO customers VALUES ('John','Elder','Johny@codemy.com')")
+
+    # Commit our command
+    conn.commit()
+
+    #Close our connection
+    conn.close()
+
+def insertManyDatainDB() -> None:
+    # create/connect to db
+    conn = sqlite3.connect("customer.db")
+
+    # create cursor
+    c = conn.cursor()
+
+    many_customers = [
+                        ('Flemming','Mikkel','ditto@hotmail.com'),
+                        ('Manuel','Ole','fitto@hotmail.com'),
+                        ('Mikkel','Bob','gitto@hotmail.com')
+                    ]
+
+    # create a table
+    c.executemany("INSERT INTO customers VALUES (?,?,?)",many_customers)
 
     # Commit our command
     conn.commit()
