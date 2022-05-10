@@ -185,3 +185,43 @@ def DeleteRecordsInTheDataBase() -> None:
     conn.commit()
 
     c.close()
+
+def OrderByRecordsInTheDataBase() -> None:
+    # create/connect to db
+    conn = sqlite3.connect("customer.db")
+
+    # create cursor
+    c = conn.cursor()
+
+    # Query the Database with Primary key
+    # SQLite automatically add rowID's for each record "set of data"
+    c.execute("SELECT rowid, * FROM  customers ORDER BY rowid DESC")
+
+    items = c.fetchall()
+
+    for item in items:
+        print(item)
+
+    conn.commit()
+
+    c.close()
+
+def DropTheDataBase() -> None:
+    # create/connect to db
+    conn = sqlite3.connect("customer.db")
+
+    # create cursor
+    c = conn.cursor()
+
+    # Query the Database with Primary key
+    # SQLite automatically add rowID's for each record "set of data"
+    c.execute("DROP TABLE customers")
+
+    items = c.fetchall()
+
+    for item in items:
+        print(item)
+
+    conn.commit()
+
+    c.close()
